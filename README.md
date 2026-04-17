@@ -1,7 +1,8 @@
-<<<<<<< codex/replace-liquidcrystal-with-liquidcrystal_i2c-and-add-sd-modu-dvygfz
 # Rotating Distance Measurement
 
 <img width="3745" height="3024" alt="Aufbau" src="https://github.com/user-attachments/assets/8973ef26-85bf-4b99-a203-b4113d0161e9" />
+
+<img width="4032" height="3024" alt="20260417_104809" src="https://github.com/user-attachments/assets/cd420b83-92fa-4115-9fea-b8b2fd58885a" />
 
 <img width="947" height="701" alt="grafik" src="https://github.com/user-attachments/assets/0bc7966a-bb63-41d5-9c5c-c44a46430df7" />
 
