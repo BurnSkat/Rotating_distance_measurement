@@ -72,8 +72,8 @@ const int IR_RECEIVE_PIN=A3;
 
 
 //----------Variablen für HC-SR04 initalisieren Start----------------------------------
-const int trigPin = A5;
-const int echoPin = A4;
+const int trigPin = D0;
+const int echoPin = D1;
 int SWRD = A0;
 bool measure=false;
 float duration, distance;
