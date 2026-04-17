@@ -1,0 +1,9 @@
+Arduino UNO:
+
+Display:
+Abmessungen	80 mm x 36 mm x 12,5 mm
+Sichtbereich	12 mm x 56 mm
+
+HC-SR04:
+45*20*15
+
