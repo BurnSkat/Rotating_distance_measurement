@@ -1,12 +1,15 @@
 #include <Arduino.h>
 #include <Stepper.h>
 #include <IRremote.h>
-#include <LiquidCrystal.h>
+#include <LiquidCrystal_I2C.h>
+#include <SPI.h>
+#include <SD.h>
 #include <avr/pgmspace.h>
 #include <EEPROM.h>
 //----------LCD-Parameter initalisieren & Menü definieren Start----------------------------------
-const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
-LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+const int SD_CS_PIN = 10;
+bool sdAvailable = false;
 
 /*
 byte Logo[8] = { //definieren Sonderzeichen
@@ -78,7 +81,8 @@ float duration, distance;
 
 
 void setup() {
-  lcd.begin(16,2);
+  lcd.init();
+  lcd.backlight();
   lcd.setCursor(2,0);
   lcd.print("Raumvermesser");
   lcd.setCursor(5,1);
@@ -94,6 +98,12 @@ void setup() {
   pinMode(echoPin, INPUT);
   //pinMode(RECV_PIN,INPUT);
   Serial.begin(9600);
+  sdAvailable = SD.begin(SD_CS_PIN);
+  if (sdAvailable) {
+    Serial.println("SD-Karte bereit");
+  } else {
+    Serial.println("SD-Karte nicht gefunden");
+  }
     IrReceiver.begin(IR_RECEIVE_PIN, ENABLE_LED_FEEDBACK);
     Serial.println("Ready to receive IR signals");
   //updateMenu();
@@ -114,6 +124,15 @@ void measurement(){ //Void zum manuellen Messen der Entfernung
   distance = (duration*.0343)/2;
   Serial.print("Distance: ");
   Serial.println(distance);
+  if (sdAvailable) {
+    File dataFile = SD.open("messung.csv", FILE_WRITE);
+    if (dataFile) {
+      dataFile.print(millis());
+      dataFile.print(';');
+      dataFile.println(distance);
+      dataFile.close();
+    }
+  }
   delay(500);
 
   if (modestate==5){
