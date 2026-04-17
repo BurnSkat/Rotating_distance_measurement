@@ -107,49 +107,31 @@ Ausgabe: LCD-Display, SD-Karte
 
 ## Bedienungsanleitung
 
-Tastenbelegung Arduino IR Remote, Protokoll + Command HEX
+### IR-Fernbedienung (Protokoll 7)
 
-Protokoll 7:
+Die folgende Tabelle basiert direkt auf den in `Ultraschall.ino` ausgewerteten `command`-Werten.
 
-CH-:		0x45
-
-CH:			0x46
-
-CH+:		0x47
-
--<<:		0x44
-
-->>:		0x40
-
-Play/Pause:	0x43
-
-Vol-:		0x7
-
-Vol+:		0x15
-
-EQ:			0x9
-
-0:			0x16
-
-100+:		0x19
-
-200+:		0xD
-
-1:			0xC
-
-2:			0x18
-
-3:			0x5E
-
-4:			0x8
-
-5:			0x1C
-
-6:			0x5A
-
-7:			0x42
-
-8:			0x52
-
-9:			0x4A
+| Taste | IR-HEX (Command) | Verwendung im Sketch |
+|---|---|---|
+| CH- | `0x45` | Verringert die Anzahl der Messungen im jeweiligen Untermenü (`modestate` 1/2). |
+| CH | `0x46` | Bestätigt die Auswahl: startet im manuellen Modus die Initialisierung/den Ablauf; im Automatik-Menü wird die Messanzahl übernommen. |
+| CH+ | `0x47` | Erhöht die Anzahl der Messungen im jeweiligen Untermenü (`modestate` 1/2). |
+| -<< | `0x44` | Dreht im manuellen Messmodus nach links (Gegenuhrzeigersinn); in der Ergebnisansicht blättert zurück. |
+| >> | `0x40` | Dreht im manuellen Messmodus nach rechts (Uhrzeigersinn); in der Ergebnisansicht blättert vor. |
+| Play/Pause | `0x43` | Löst im manuellen Messmodus (`modestate` 5) eine Ultraschallmessung aus. |
+| Vol- | `0x07` | Dreht den Stepper schrittweise nach links (200 Schritte). |
+| Vol+ | `0x15` | Dreht den Stepper schrittweise nach rechts (200 Schritte). |
+| 0 | `0x16` | Setzt im Ergebnisbildschirm (`modestate` 9) Mess-/Hilfswerte zurück und springt ins Hauptmenü. |
+| 1 | `0x0C` | Wählt „Manuell“ (setzt `menuPage=0`, `modestate=1`). |
+| 2 | `0x18` | Wählt „Automatik“ (setzt `menuPage=1`, `modestate=2`). |
+| 3 | `0x5E` | Im Sketch derzeit nicht ausgewertet. |
+| 4 | `0x08` | Im Sketch derzeit nicht ausgewertet. |
+| 5 | `0x1C` | Im Sketch derzeit nicht ausgewertet. |
+| 6 | `0x5A` | Im Sketch derzeit nicht ausgewertet. |
+| 7 | `0x42` | Im Sketch derzeit nicht ausgewertet. |
+| 8 | `0x52` | Im Sketch derzeit nicht ausgewertet. |
+| 9 | `0x4A` | Im Sketch derzeit nicht ausgewertet. |
+| EQ | `0x09` | Im Sketch derzeit nicht ausgewertet. |
+| 100+ | `0x19` | Im Sketch derzeit nicht ausgewertet. |
+| 200+ | `0x0D` | Im Sketch derzeit nicht ausgewertet. |
 
