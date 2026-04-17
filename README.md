@@ -3,10 +3,10 @@
 
 
 
-Es soll mit einer IR-Fernbedienung ein Steppermotor bewegt werden, auf dessen Achse ein Ultraschallsensor montiert ist. Dieser soll mit Tasten auf der Fernbedienung über die horizontale Achse stufenlos um 360° in beide Richtungen gedreht werden können, sodass der Abstand in [m] auf einem LCD-Display per Knopfdruck in Echtzeit dargestellt werden kann.
+Es soll mit einer IR-Fernbedienung ein Steppermotor bewegt werden, auf dessen Achse ein Ultraschallsensor montiert ist. Dieser soll mit Tasten auf der Fernbedienung über die horizontale Achse stufenlos um 360° in beide Richtungen gedreht werden können, sodass der Abstand in [cm] auf einem LCD-Display per Knopfdruck in Echtzeit dargestellt werden kann.
 Für eine korrekte IR-Signalerkennung von der Fernbedienung wird eine rote LED installiert, die aufleuchtet, wenn ein IR-Signal erkannt wird.
 
-Zusatz: Taste auf der Fernbedienung für automatische Messungen für einen kompletten 360° Umlauf. Speicherung der Messergebnisse in einen bestimmten Format auf einem SD-Kartenmodul, um die Auswertung zu erleichtern.
+Zusatz: Taste auf der Fernbedienung für automatische Messungen für einen kompletten 360° Umlauf. Speicherung der Messergebnisse im .csv Format auf einem SD-Kartenmodul, um die Auswertung zu erleichtern.
 
 
 Wir wollen ein Gerät zur Abmessung eines Raumes entwerfen. Dabei soll ein Ultraschallsensor verwendet werden, der auf der Drehachse eines Steppermotors befestigt ist. Dieser kann an einer Stelle des Raumes abgestellt werden und die horizontale Messung soll dann per IR-Fernbedienung eingeleitet werden. 
@@ -27,3 +27,5 @@ Eingabe:
 Ultraschallsensor, IR Fernbedienung, An/Aus-Schalter
  
 Verarbeitung: Arduino, (ggf. Encoder)
+
+Ausgabe: LCD-Display, SD-Karte
