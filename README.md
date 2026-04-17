@@ -106,68 +106,49 @@ Ausgabe: LCD-Display, SD-Karte
 
 ## Bedienungsanleitung
 
-Tastenbelegung Arduino IR Remote, Protokol + Command HEX
+Tastenbelegung Arduino IR Remote, Protokoll + Command HEX
 
-CH-:		Protocol: 7
-			Command: 0x45
+Protokoll 7:
 
-CH:			Protocol: 7
-			Command: 0x46
+CH-:		0x45
 
-CH+:		Protocol: 7
-			Command: 0x47
+CH:			0x46
 
-<<:			Protocol: 7
-			Command: 0x44
+CH+:		0x47
 
->>:			Protocol: 7
-			Command: 0x40
+-<<:		0x44
 
-Play/Pause:	Protocol: 7
-			Command: 0x43
+->>:		0x40
 
-Vol-:		Protocol: 7
-			Command: 0x7
+Play/Pause:	0x43
 
-Vol+:		Protocol: 7
-			Command: 0x15
+Vol-:		0x7
 
-EQ:			Protocol: 7
-			Command: 0x9
+Vol+:		0x15
 
-0:			Protocol: 7
-			Command: 0x16
+EQ:			0x9
 
-100+:		Protocol: 7
-			Command: 0x19
+0:			0x16
 
-200+:		Protocol: 7
-			Command: 0xD
+100+:		0x19
 
-1:			Protocol: 7
-			Command: 0xC
+200+:		0xD
 
-2:			Protocol: 7
-			Command: 0x18
+1:			0xC
 
-3:			Protocol: 7
-			Command: 0x5E
+2:			0x18
 
-4:			Protocol: 7
-			Command: 0x8
+3:			0x5E
 
-5:			Protocol: 7
-			Command: 0x1C
+4:			0x8
 
-6:			Protocol: 7
-			Command: 0x5A
+5:			0x1C
 
-7:			Protocol: 7
-			Command: 0x42
+6:			0x5A
 
-8:			Protocol: 7
-			Command: 0x52
+7:			0x42
 
-9:			Protocol: 7
-			Command: 0x4A
+8:			0x52
+
+9:			0x4A
 
