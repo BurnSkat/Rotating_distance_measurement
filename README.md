@@ -3,8 +3,10 @@
 
 <img width="3745" height="3024" alt="Aufbau" src="https://github.com/user-attachments/assets/8973ef26-85bf-4b99-a203-b4113d0161e9" />
 
-[SPI_Reader_Micro_Speicherkartenmodul_Arduino_Schematics_b636d48d-56a5-4e52-bbe0-19c7ae77d037.pdf](https://github.com/user-attachments/files/26814594/SPI_Reader_Micro_Speicherkartenmodul_Arduino_Schematics_b636d48d-56a5-4e52-bbe0-19c7ae77d037.pdf)
-[HD44780_1602_Blaues_LCD_Display_mit_Serielle_Schnittstelle_I2C_Bundle_Datenblatt_AZ-Delivery_Vertriebs_GmbH.pdf](https://github.com/user-attachments/files/26814592/HD44780_1602_Blaues_LCD_Display_mit_Serielle_Schnittstelle_I2C_Bundle_Datenblatt_AZ-Delivery_Vertriebs_GmbH.pdf)
+<img width="947" height="701" alt="grafik" src="https://github.com/user-attachments/assets/0bc7966a-bb63-41d5-9c5c-c44a46430df7" />
+
+<img width="869" height="612" alt="grafik" src="https://github.com/user-attachments/assets/9aa28e56-934c-467c-952b-79113d625685" />
+
 
 
 ## Projektüberblick
