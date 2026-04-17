@@ -7,3 +7,4 @@ Sichtbereich	12 mm x 56 mm
 HC-SR04:
 45*20*15
 
+MB102 Netzteil:
