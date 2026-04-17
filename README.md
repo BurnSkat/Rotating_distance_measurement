@@ -107,31 +107,36 @@ Ausgabe: LCD-Display, SD-Karte
 
 ## Bedienungsanleitung
 
-### IR-Fernbedienung (Protokoll 7)
+### Winkelanpassung & IR-Fernbedienung (abgeleitet aus den Winkel-Funktionen im Sketch)
 
-Die folgende Tabelle basiert direkt auf den in `Ultraschall.ino` ausgewerteten `command`-Werten.
+Hinweis: Eine separate Datei `Winkelanpassung.ino` ist im Repository aktuell nicht vorhanden.  
+Die folgende Zuordnung wurde daher aus den Funktionen zur Winkelsteuerung in `Ultraschall.ino` abgeleitet (`turnrightinf`, `turnleftinf`, `turnrightstep`, `turnleftstep`, Menü-/Messlogik im `loop()`).
 
-| Taste | IR-HEX (Command) | Verwendung im Sketch |
+| Taste | IR-HEX (Command) | Winkel-/Menüfunktion im Sketch |
 |---|---|---|
-| CH- | `0x45` | Verringert die Anzahl der Messungen im jeweiligen Untermenü (`modestate` 1/2). |
-| CH | `0x46` | Bestätigt die Auswahl: startet im manuellen Modus die Initialisierung/den Ablauf; im Automatik-Menü wird die Messanzahl übernommen. |
-| CH+ | `0x47` | Erhöht die Anzahl der Messungen im jeweiligen Untermenü (`modestate` 1/2). |
-| -<< | `0x44` | Dreht im manuellen Messmodus nach links (Gegenuhrzeigersinn); in der Ergebnisansicht blättert zurück. |
-| >> | `0x40` | Dreht im manuellen Messmodus nach rechts (Uhrzeigersinn); in der Ergebnisansicht blättert vor. |
-| Play/Pause | `0x43` | Löst im manuellen Messmodus (`modestate` 5) eine Ultraschallmessung aus. |
-| Vol- | `0x07` | Dreht den Stepper schrittweise nach links (200 Schritte). |
-| Vol+ | `0x15` | Dreht den Stepper schrittweise nach rechts (200 Schritte). |
-| 0 | `0x16` | Setzt im Ergebnisbildschirm (`modestate` 9) Mess-/Hilfswerte zurück und springt ins Hauptmenü. |
-| 1 | `0x0C` | Wählt „Manuell“ (setzt `menuPage=0`, `modestate=1`). |
-| 2 | `0x18` | Wählt „Automatik“ (setzt `menuPage=1`, `modestate=2`). |
-| 3 | `0x5E` | Im Sketch derzeit nicht ausgewertet. |
-| 4 | `0x08` | Im Sketch derzeit nicht ausgewertet. |
-| 5 | `0x1C` | Im Sketch derzeit nicht ausgewertet. |
-| 6 | `0x5A` | Im Sketch derzeit nicht ausgewertet. |
-| 7 | `0x42` | Im Sketch derzeit nicht ausgewertet. |
-| 8 | `0x52` | Im Sketch derzeit nicht ausgewertet. |
-| 9 | `0x4A` | Im Sketch derzeit nicht ausgewertet. |
-| EQ | `0x09` | Im Sketch derzeit nicht ausgewertet. |
-| 100+ | `0x19` | Im Sketch derzeit nicht ausgewertet. |
-| 200+ | `0x0D` | Im Sketch derzeit nicht ausgewertet. |
+| `1` | `0x0C` | Wählt manuellen Modus (`menuPage=0`, `modestate=1`). |
+| `2` | `0x18` | Wählt Automatikmodus (`menuPage=1`, `modestate=2`). |
+| `CH+` | `0x47` | Erhöht die Anzahl geplanter Messungen (manuell/automatik je nach Menüseite). |
+| `CH-` | `0x45` | Verringert die Anzahl geplanter Messungen (manuell/automatik je nach Menüseite). |
+| `CH` | `0x46` | Bestätigt die Auswahl (im manuellen Pfad Start der Initialisierung/Weiterführung). |
+| `>>` | `0x40` | Winkelanpassung im manuellen Messmodus: kontinuierlich nach rechts (Uhrzeigersinn); in Ergebnisansicht vorblättern. |
+| `-<<` | `0x44` | Winkelanpassung im manuellen Messmodus: kontinuierlich nach links (Gegenuhrzeigersinn); in Ergebnisansicht zurückblättern. |
+| `Vol+` | `0x15` | Winkelanpassung in festen Schritten: `turnrightstep()` mit 200 Steps nach rechts. |
+| `Vol-` | `0x07` | Winkelanpassung in festen Schritten: `turnleftstep()` mit 200 Steps nach links. |
+| `Play/Pause` | `0x43` | Löst im manuellen Messmodus (`modestate=5`) eine Ultraschallmessung aus. |
+| `0` | `0x16` | Rücksetzen von Mess-/Hilfswerten in der Ergebnisansicht (`modestate=9`), danach zurück ins Hauptmenü. |
 
+#### Nicht ausgewertete Tasten (derzeit ohne Funktion im Sketch)
+
+| Taste | IR-HEX |
+|---|---|
+| `3` | `0x5E` |
+| `4` | `0x08` |
+| `5` | `0x1C` |
+| `6` | `0x5A` |
+| `7` | `0x42` |
+| `8` | `0x52` |
+| `9` | `0x4A` |
+| `EQ` | `0x09` |
+| `100+` | `0x19` |
+| `200+` | `0x0D` |
