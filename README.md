@@ -102,4 +102,72 @@ Ultraschallsensor, IR Fernbedienung, An/Aus-Schalter
 Verarbeitung: Arduino, (ggf. Encoder)
 
 Ausgabe: LCD-Display, SD-Karte
->>>>>>> main
+
+
+## Bedienungsanleitung
+
+Tastenbelegung Arduino IR Remote, Protokol + Command HEX
+
+CH-:		Protocol: 7
+			Command: 0x45
+
+CH:			Protocol: 7
+			Command: 0x46
+
+CH+:		Protocol: 7
+			Command: 0x47
+
+<<:			Protocol: 7
+			Command: 0x44
+
+>>:			Protocol: 7
+			Command: 0x40
+
+Play/Pause:	Protocol: 7
+			Command: 0x43
+
+Vol-:		Protocol: 7
+			Command: 0x7
+
+Vol+:		Protocol: 7
+			Command: 0x15
+
+EQ:			Protocol: 7
+			Command: 0x9
+
+0:			Protocol: 7
+			Command: 0x16
+
+100+:		Protocol: 7
+			Command: 0x19
+
+200+:		Protocol: 7
+			Command: 0xD
+
+1:			Protocol: 7
+			Command: 0xC
+
+2:			Protocol: 7
+			Command: 0x18
+
+3:			Protocol: 7
+			Command: 0x5E
+
+4:			Protocol: 7
+			Command: 0x8
+
+5:			Protocol: 7
+			Command: 0x1C
+
+6:			Protocol: 7
+			Command: 0x5A
+
+7:			Protocol: 7
+			Command: 0x42
+
+8:			Protocol: 7
+			Command: 0x52
+
+9:			Protocol: 7
+			Command: 0x4A
+
