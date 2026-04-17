@@ -3,6 +3,10 @@
 
 <img width="3745" height="3024" alt="Aufbau" src="https://github.com/user-attachments/assets/8973ef26-85bf-4b99-a203-b4113d0161e9" />
 
+[SPI_Reader_Micro_Speicherkartenmodul_Arduino_Schematics_b636d48d-56a5-4e52-bbe0-19c7ae77d037.pdf](https://github.com/user-attachments/files/26814594/SPI_Reader_Micro_Speicherkartenmodul_Arduino_Schematics_b636d48d-56a5-4e52-bbe0-19c7ae77d037.pdf)
+[HD44780_1602_Blaues_LCD_Display_mit_Serielle_Schnittstelle_I2C_Bundle_Datenblatt_AZ-Delivery_Vertriebs_GmbH.pdf](https://github.com/user-attachments/files/26814592/HD44780_1602_Blaues_LCD_Display_mit_Serielle_Schnittstelle_I2C_Bundle_Datenblatt_AZ-Delivery_Vertriebs_GmbH.pdf)
+
+
 ## Projektüberblick
 Dieses Projekt misst Distanzen in einem Raum mit einem **HC-SR04 Ultraschallsensor**, der auf einem **Steppermotor** montiert ist. Die Bedienung erfolgt über eine **IR-Fernbedienung**. Messwerte werden auf einem **16x2 I2C-LCD** angezeigt und zusätzlich auf eine **SD-Karte** geschrieben.
 
