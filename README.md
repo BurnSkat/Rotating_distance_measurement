@@ -107,49 +107,36 @@ Ausgabe: LCD-Display, SD-Karte
 
 ## Bedienungsanleitung
 
-Tastenbelegung Arduino IR Remote, Protokoll + Command HEX
+### Winkelanpassung & IR-Fernbedienung (abgeleitet aus den Winkel-Funktionen im Sketch)
 
-Protokoll 7:
+Hinweis: Eine separate Datei `Winkelanpassung.ino` ist im Repository aktuell nicht vorhanden.  
+Die folgende Zuordnung wurde daher aus den Funktionen zur Winkelsteuerung in `Ultraschall.ino` abgeleitet (`turnrightinf`, `turnleftinf`, `turnrightstep`, `turnleftstep`, Menü-/Messlogik im `loop()`).
 
-CH-:		0x45
+| Taste | IR-HEX (Command) | Winkel-/Menüfunktion im Sketch |
+|---|---|---|
+| `1` | `0x0C` | Wählt manuellen Modus (`menuPage=0`, `modestate=1`). |
+| `2` | `0x18` | Wählt Automatikmodus (`menuPage=1`, `modestate=2`). |
+| `CH+` | `0x47` | Erhöht die Anzahl geplanter Messungen (manuell/automatik je nach Menüseite). |
+| `CH-` | `0x45` | Verringert die Anzahl geplanter Messungen (manuell/automatik je nach Menüseite). |
+| `CH` | `0x46` | Bestätigt die Auswahl (im manuellen Pfad Start der Initialisierung/Weiterführung). |
+| `>>` | `0x40` | Winkelanpassung im manuellen Messmodus: kontinuierlich nach rechts (Uhrzeigersinn); in Ergebnisansicht vorblättern. |
+| `-<<` | `0x44` | Winkelanpassung im manuellen Messmodus: kontinuierlich nach links (Gegenuhrzeigersinn); in Ergebnisansicht zurückblättern. |
+| `Vol+` | `0x15` | Winkelanpassung in festen Schritten: `turnrightstep()` mit 200 Steps nach rechts. |
+| `Vol-` | `0x07` | Winkelanpassung in festen Schritten: `turnleftstep()` mit 200 Steps nach links. |
+| `Play/Pause` | `0x43` | Löst im manuellen Messmodus (`modestate=5`) eine Ultraschallmessung aus. |
+| `0` | `0x16` | Rücksetzen von Mess-/Hilfswerten in der Ergebnisansicht (`modestate=9`), danach zurück ins Hauptmenü. |
 
-CH:			0x46
+#### Nicht ausgewertete Tasten (derzeit ohne Funktion im Sketch)
 
-CH+:		0x47
-
--<<:		0x44
-
-->>:		0x40
-
-Play/Pause:	0x43
-
-Vol-:		0x7
-
-Vol+:		0x15
-
-EQ:			0x9
-
-0:			0x16
-
-100+:		0x19
-
-200+:		0xD
-
-1:			0xC
-
-2:			0x18
-
-3:			0x5E
-
-4:			0x8
-
-5:			0x1C
-
-6:			0x5A
-
-7:			0x42
-
-8:			0x52
-
-9:			0x4A
-
+| Taste | IR-HEX |
+|---|---|
+| `3` | `0x5E` |
+| `4` | `0x08` |
+| `5` | `0x1C` |
+| `6` | `0x5A` |
+| `7` | `0x42` |
+| `8` | `0x52` |
+| `9` | `0x4A` |
+| `EQ` | `0x09` |
+| `100+` | `0x19` |
+| `200+` | `0x0D` |
