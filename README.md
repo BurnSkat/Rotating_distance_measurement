@@ -1,5 +1,10 @@
 # Rotating Distance Measurement
 
+Dieses Projekt erfasst Distanzwerte mit einem **HC-SR04 Ultraschallsensor**, der auf einem **Schrittmotor** montiert ist und den Raum über 360° abtastet. 
+Die Bedienung erfolgt über eine **IR-Fernbedienung**, die Ausgabe über ein **16x2-I2C-LCD** und optional per **CSV-Logging auf SD-Karte**.
+
+## Bilder
+
 <img width="3745" height="3024" alt="Aufbau" src="https://github.com/user-attachments/assets/8973ef26-85bf-4b99-a203-b4113d0161e9" />
 
 <img width="4032" height="3024" alt="20260417_104809" src="https://github.com/user-attachments/assets/cd420b83-92fa-4115-9fea-b8b2fd58885a" />
@@ -8,27 +13,32 @@
 
 <img width="869" height="612" alt="grafik" src="https://github.com/user-attachments/assets/9aa28e56-934c-467c-952b-79113d625685" />
 
+## Funktionen
 
-
-## Projektüberblick
-Dieses Projekt misst Distanzen in einem Raum mit einem **HC-SR04 Ultraschallsensor**, der auf einem **Steppermotor** montiert ist. Die Bedienung erfolgt über eine **IR-Fernbedienung**. Messwerte werden auf einem **16x2 I2C-LCD** angezeigt und zusätzlich auf eine **SD-Karte** geschrieben.
-
-Ziel ist eine drehbare 360°-Messplattform mit manuellem und automatischem Modus.
-
-## Hauptfunktionen
 - **Manueller Modus**
-  - Sensor wird per IR-Befehlen gedreht.
-  - Einzelmessungen werden ausgelöst und angezeigt.
+  - Drehen des Sensors per IR-Tasten (kontinuierlich oder in festen Schritten)
+  - Einzelmessungen auf Tastendruck
 - **Automatik-Modus**
-  - Vordefinierte Anzahl von Messpunkten über 360°.
-- **LCD-Ausgabe (I2C)**
-  - Menüführung und Messwerte auf 16x2 Display.
+  - Messung einer definierten Anzahl von Messpunkten über 360°
+- **Anzeige am LCD**
+  - Menüführung, Modusauswahl und Messwerte
 - **SD-Logging**
-  - Jeder Messwert wird in `messung.csv` abgelegt.
-  - Format pro Zeile: `millis;distance`
+  - Speicherung in `messung.csv`
+  - Zeilenformat: `millis;distance`
 
-## Verwendete Bibliotheken
-`Ultraschall.ino` nutzt:
+## Hardware
+
+- Arduino (UNO-kompatibel)
+- HC-SR04 Ultraschallsensor
+- Schrittmotor + Treiber
+- IR-Empfänger + Fernbedienung
+- 16x2 I2C LCD
+- SD-Kartenmodul
+- MB102 Netzteil-Adapter
+- Wondom BCPB2 Spannungsversorgung
+
+## Verwendete Bibliotheken (laut `Ultraschall.ino`)
+
 - `Arduino.h`
 - `Stepper.h`
 - `IRremote.h`
@@ -38,19 +48,10 @@ Ziel ist eine drehbare 360°-Messplattform mit manuellem und automatischem Modus
 - `avr/pgmspace.h`
 - `EEPROM.h`
 
-## Hardware (aktueller Stand)
-- Arduino (UNO-kompatibel)
-- HC-SR04 Ultraschallsensor
-- Steppermotor + Treiber
-- IR-Empfänger + Fernbedienung
-- 16x2 I2C LCD
-- SD-Kartenmodul
-- MB102 Netzteil Adapter
-- Wondom BCPB2 Spannungsversorgung
+## Pinbelegung (`Ultraschall.ino`)
 
-## Pinbelegung laut `Ultraschall.ino`
-### Steppermotor
-- `D9`, `D7`, `D8`, `D6` (Stepper-Spulen)
+### Schrittmotor
+- `D9`, `D7`, `D8`, `D6`
 
 ### IR
 - `A3` → `IR_RECEIVE_PIN`
@@ -60,75 +61,65 @@ Ziel ist eine drehbare 360°-Messplattform mit manuellem und automatischem Modus
 - `D1` → `echoPin`
 
 ### SD-Karte
-- `D10` → `SD_CS_PIN` (Chip Select)
-- SPI-Pins sind boardabhängig (bei UNO: `D11/D12/D13`)
+- `D10` → `SD_CS_PIN`
+- SPI bei UNO: `D11`, `D12`, `D13`
 
-### Sonstige Eingänge
+### Weitere Eingänge
 - `A0` → `SWRD`
 - `A1` → `SWBU`
 - `A2` → `SWWH`
 
-## Ablauf beim Start
-1. LCD wird via I2C initialisiert (`lcd.init()`, `lcd.backlight()`).
-2. Startscreen „Raumvermesser V1.0!“ wird angezeigt.
-3. IR-Empfänger wird gestartet.
-4. SD-Karte wird initialisiert:
-   - Bei Erfolg: `SD-Karte bereit` über Serial
-   - Bei Fehler: `SD-Karte nicht gefunden` über Serial
+## Startablauf
+
+1. LCD initialisieren (`lcd.init()`, `lcd.backlight()`).
+2. Startscreen anzeigen („Raumvermesser V1.0!“).
+3. IR-Empfänger starten.
+4. SD-Karte initialisieren.
+   - Erfolg: `SD-Karte bereit` (Serial)
+   - Fehler: `SD-Karte nicht gefunden` (Serial)
 
 ## SD-Logging
-In `measurement()` wird bei verfügbarer SD-Karte pro Messung in `messung.csv` geschrieben:
+
+Bei jeder Messung wird (falls SD verfügbar) in `messung.csv` geschrieben:
+
 - Zeitstempel in Millisekunden (`millis()`)
 - Trennzeichen `;`
 - Distanzwert
 
 Beispiel:
+
 ```text
 12345;67.89
 12850;68.10
 ```
 
 ## Projektdateien
-- `Ultraschall.ino` – komplette Firmware (Menü, Messlogik, Motorsteuerung, SD-Logging)
-- `README.md` – Projektbeschreibung und Setup-Informationen
 
-## Hinweise
-- Die I2C-LCD-Adresse ist im Code aktuell auf `0x27` gesetzt.
-- Bei abweichender LCD-Adresse muss der Konstruktor angepasst werden.
-- Für sauberes Logging sollte eine funktionierende SD-Karte (FAT formatiert) verwendet werden.
+- `Ultraschall.ino` – Hauptsketch (Menü, Messlogik, Motorsteuerung, SD-Logging)
+- `Winkelanpassung.ino` / `Winkelanpassungv2.ino` – Varianten zur Winkelsteuerung
+- `SDandI2CDisplay.ino` – Fokus auf SD + Display
+- `BestVersion.ino` – konsolidierter Entwicklungsstand
+- `README.md` – Dokumentation
 
-Einteilung nach EVA:
- 
-Eingabe:
-Ultraschallsensor, IR Fernbedienung, An/Aus-Schalter
- 
-Verarbeitung: Arduino, (ggf. Encoder)
+## Bedienung (IR-Fernbedienung)
 
-Ausgabe: LCD-Display, SD-Karte
+Zuordnung gemäß den im Repository enthaltenen Sketches (insbesondere `Ultraschall.ino`).
 
-
-## Bedienungsanleitung
-
-### Winkelanpassung & IR-Fernbedienung (abgeleitet aus den Winkel-Funktionen im Sketch)
-
-Hinweis: Eine separate Datei `Winkelanpassung.ino` ist im Repository aktuell nicht vorhanden.  
-Die folgende Zuordnung wurde daher aus den Funktionen zur Winkelsteuerung in `Ultraschall.ino` abgeleitet (`turnrightinf`, `turnleftinf`, `turnrightstep`, `turnleftstep`, Menü-/Messlogik im `loop()`).
-
-| Taste | IR-HEX (Command) | Winkel-/Menüfunktion im Sketch |
+| Taste | IR-HEX (Command) | Funktion |
 |---|---|---|
-| `1` | `0x0C` | Wählt manuellen Modus (`menuPage=0`, `modestate=1`). |
-| `2` | `0x18` | Wählt Automatikmodus (`menuPage=1`, `modestate=2`). |
-| `CH+` | `0x47` | Erhöht die Anzahl geplanter Messungen (manuell/automatik je nach Menüseite). |
-| `CH-` | `0x45` | Verringert die Anzahl geplanter Messungen (manuell/automatik je nach Menüseite). |
-| `CH` | `0x46` | Bestätigt die Auswahl (im manuellen Pfad Start der Initialisierung/Weiterführung). |
-| `>>` | `0x40` | Winkelanpassung im manuellen Messmodus: kontinuierlich nach rechts (Uhrzeigersinn); in Ergebnisansicht vorblättern. |
-| `-<<` | `0x44` | Winkelanpassung im manuellen Messmodus: kontinuierlich nach links (Gegenuhrzeigersinn); in Ergebnisansicht zurückblättern. |
-| `Vol+` | `0x15` | Winkelanpassung in festen Schritten: `turnrightstep()` mit 200 Steps nach rechts. |
-| `Vol-` | `0x07` | Winkelanpassung in festen Schritten: `turnleftstep()` mit 200 Steps nach links. |
-| `Play/Pause` | `0x43` | Löst im manuellen Messmodus (`modestate=5`) eine Ultraschallmessung aus. |
-| `0` | `0x16` | Rücksetzen von Mess-/Hilfswerten in der Ergebnisansicht (`modestate=9`), danach zurück ins Hauptmenü. |
+| `1` | `0x0C` | Manueller Modus (`menuPage=0`, `modestate=1`) |
+| `2` | `0x18` | Automatikmodus (`menuPage=1`, `modestate=2`) |
+| `CH+` | `0x47` | Erhöht geplante Messungen |
+| `CH-` | `0x45` | Verringert geplante Messungen |
+| `CH` | `0x46` | Bestätigt Auswahl / Start nächste Aktion |
+| `>>` | `0x40` | Kontinuierlich nach rechts / vorblättern |
+| `<<` | `0x44` | Kontinuierlich nach links / zurückblättern |
+| `Vol+` | `0x15` | Schrittweise nach rechts (200 Steps) |
+| `Vol-` | `0x07` | Schrittweise nach links (200 Steps) |
+| `Play/Pause` | `0x43` | Messung auslösen (manueller Messmodus) |
+| `0` | `0x16` | Werte zurücksetzen und ins Menü zurück |
 
-#### Nicht ausgewertete Tasten (derzeit ohne Funktion im Sketch)
+### Derzeit ohne Funktion
 
 | Taste | IR-HEX |
 |---|---|
@@ -143,15 +134,21 @@ Die folgende Zuordnung wurde daher aus den Funktionen zur Winkelsteuerung in `Ul
 | `100+` | `0x19` |
 | `200+` | `0x0D` |
 
+## EVA-Zuordnung
 
-#### Datenblätter
+- **Eingabe:** Ultraschallsensor, IR-Fernbedienung, Schalter
+- **Verarbeitung:** Arduino
+- **Ausgabe:** LCD-Display, SD-Karte
 
-https://docs.arduino.cc/resources/datasheets/A000066-datasheet.pdf
+## Hinweise
 
-https://www.boomaudio.de/media/pdf/eb/21/e6/Wondom-PS-BC12111-V2RI25nFre0q9S0.pdf
+- Die LCD-I2C-Adresse ist aktuell auf `0x27` gesetzt.
+- Bei anderer Adresse den LCD-Konstruktor im Sketch anpassen.
+- Für stabiles Logging SD-Karte in FAT/FAT32 formatieren.
 
-https://cdn.shopify.com/s/files/1/1509/1638/files/MB102_Netzteil_Adapter_Datenblatt_AZ-Delivery_Vertriebs_GmbH.pdf
+## Datenblätter
 
-https://cdn.sparkfun.com/datasheets/Sensors/Proximity/HCSR04.pdf
-
-
+- Arduino UNO: https://docs.arduino.cc/resources/datasheets/A000066-datasheet.pdf
+- Wondom BCPB2: https://www.boomaudio.de/media/pdf/eb/21/e6/Wondom-PS-BC12111-V2RI25nFre0q9S0.pdf
+- MB102: https://cdn.shopify.com/s/files/1/1509/1638/files/MB102_Netzteil_Adapter_Datenblatt_AZ-Delivery_Vertriebs_GmbH.pdf
+- HC-SR04: https://cdn.sparkfun.com/datasheets/Sensors/Proximity/HCSR04.pdf
