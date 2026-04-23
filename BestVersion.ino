@@ -1,12 +1,15 @@
 #include <Arduino.h>
 #include <Stepper.h>
 #include <IRremote.h>
-#include <LiquidCrystal.h>
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
 #include <avr/pgmspace.h>
 #include <EEPROM.h>
+#include <SPI.h>
+#include <SD.h>
 //----------LCD-Parameter initalisieren----------------------------------
-const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
-LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+const uint8_t LCD_I2C_ADDRESS = 0x27; // Haeufige Standardadresse fuer LCD-I2C-Backpacks
+LiquidCrystal_I2C lcd(LCD_I2C_ADDRESS, 16, 2);
 
 /*
 byte Logo[8] = { //definieren Sonderzeichen
@@ -98,9 +101,18 @@ bool measure=false;
 float duration, distance;
 //----------Variablen für HC-SR04 initalisieren Ende----------------------------------
 
+const uint8_t SD_CS_PIN = 10;
+const char SD_FILE_NAME[] = "messungen.csv";
+bool sdAvailable = false;
+
+void initSDCard();
+void logMeasurementToSD(const char* modus, int messungNummer, float distanzCm);
+
+
 
 void setup() {
-  lcd.begin(16,2);
+  lcd.init();
+  lcd.backlight();
   lcd.setCursor(2,0);
   lcd.print("Raumvermesser");
   lcd.setCursor(5,1);
@@ -110,6 +122,7 @@ void setup() {
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
   Serial.begin(9600);
+  initSDCard();
     IrReceiver.begin(IR_RECEIVE_PIN, ENABLE_LED_FEEDBACK);
     Serial.println("Ready to receive IR signals");
 
@@ -538,6 +551,7 @@ void measurement(){ //Void zum Messen der Entfernung, Verzweigung am Ende je nac
     EEPROM.put(TabelleM[GemessenM], distance);
     results[GemessenM]=distance;
     Serial.print(results[GemessenM]);
+    logMeasurementToSD("manuell", GemessenM + 1, distance);
     GemessenM++;
     manualAngleMenu();
     if (GemessenM==MessungenM){
@@ -549,6 +563,7 @@ void measurement(){ //Void zum Messen der Entfernung, Verzweigung am Ende je nac
     EEPROM.put(TabelleA[GemessenA], distance);
     Aresults[GemessenA]=distance;
     Serial.print(Aresults[GemessenA]);
+    logMeasurementToSD("automatik", GemessenA + 1, distance);
     GemessenA++;
     if (GemessenA==MessungenA){
       modestate=12;
@@ -651,6 +666,48 @@ modestate=14;
 }
 
 //-----------------------------------------AUTOMATISCHES MENÜ CUSTOM VOIDS ENDE--------------------------------------------------------------
+
+
+void initSDCard(){
+  if (!SD.begin(SD_CS_PIN)) {
+    sdAvailable = false;
+    Serial.println("SD card init failed");
+    return;
+  }
+
+  sdAvailable = true;
+  if (!SD.exists(SD_FILE_NAME)) {
+    File csvFile = SD.open(SD_FILE_NAME, FILE_WRITE);
+    if (csvFile) {
+      csvFile.println("modus,messung,distanz_cm,steps,millis");
+      csvFile.close();
+    }
+  }
+}
+
+void logMeasurementToSD(const char* modus, int messungNummer, float distanzCm){
+  if (!sdAvailable) {
+    return;
+  }
+
+  File csvFile = SD.open(SD_FILE_NAME, FILE_WRITE);
+  if (!csvFile) {
+    sdAvailable = false;
+    Serial.println("SD write failed");
+    return;
+  }
+
+  csvFile.print(modus);
+  csvFile.print(',');
+  csvFile.print(messungNummer);
+  csvFile.print(',');
+  csvFile.print(distanzCm, 2);
+  csvFile.print(',');
+  csvFile.print(stepCount);
+  csvFile.print(',');
+  csvFile.println(millis());
+  csvFile.close();
+}
 
 //-----------------------------Custom Voids Ende----------------------------------
 
