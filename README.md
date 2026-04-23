@@ -45,6 +45,8 @@ Ziel ist eine drehbare 360°-Messplattform mit manuellem und automatischem Modus
 - IR-Empfänger + Fernbedienung
 - 16x2 I2C LCD
 - SD-Kartenmodul
+- MB102 Netzteil Adapter
+- Wondom BCPB2 Spannungsversorgung
 
 ## Pinbelegung laut `Ultraschall.ino`
 ### Steppermotor
@@ -140,3 +142,16 @@ Die folgende Zuordnung wurde daher aus den Funktionen zur Winkelsteuerung in `Ul
 | `EQ` | `0x09` |
 | `100+` | `0x19` |
 | `200+` | `0x0D` |
+
+
+#### Datenblätter
+
+https://docs.arduino.cc/resources/datasheets/A000066-datasheet.pdf
+
+https://www.boomaudio.de/media/pdf/eb/21/e6/Wondom-PS-BC12111-V2RI25nFre0q9S0.pdf
+
+https://cdn.shopify.com/s/files/1/1509/1638/files/MB102_Netzteil_Adapter_Datenblatt_AZ-Delivery_Vertriebs_GmbH.pdf
+
+https://cdn.sparkfun.com/datasheets/Sensors/Proximity/HCSR04.pdf
+
+
